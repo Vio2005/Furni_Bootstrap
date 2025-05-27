@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from .models import *
 from.forms import*
+from django.http import JsonResponse
 
 # Create your views here.
 def shop(request):
@@ -62,3 +63,12 @@ def deletecart(request,id):
 
 def checkout(request):
     return render(request,'checkout.html')
+
+def addcart(request):
+    name=request.GET['name']
+    price=request.GET['price']
+    CartProduct.objects.create(
+        name=name,
+        amount=price
+    )
+    return JsonResponse({'status':'success'})
